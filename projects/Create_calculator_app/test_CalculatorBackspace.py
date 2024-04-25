@@ -60,22 +60,16 @@ Validation:
 import pytest
 from calculator import backspace
 
-def test_backspace_with_non_empty_string():
-    entry = "Hello"
+@pytest.mark.parametrize("entry, expected_result", [
+    ("Hello", "Hell"),                  # Test backspacing from a non-empty string
+    ("", ""),                           # Test backspacing from an empty string
+    ("A", ""),                          # Test backspacing from a single character string
+    ("This is a long string", "This is a long strin")  # Test backspacing from a long string
+])
+def test_backspace(entry, expected_result):
+    """Test backspace function with different input strings."""
+    # Act
     result = backspace(entry)
-    assert result == "Hell"
 
-def test_backspace_with_empty_string():
-    entry = ""
-    result = backspace(entry)
-    assert result == ""
-
-def test_backspace_with_single_char_string():
-    entry = "A"
-    result = backspace(entry)
-    assert result == ""
-
-def test_backspace_with_long_string():
-    entry = "This is a long string"
-    result = backspace(entry)
-    assert result == "This is a long strin"
+    # Assert
+    assert result == expected_result
